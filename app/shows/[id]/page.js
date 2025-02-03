@@ -4,9 +4,11 @@ import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Loading from "../loading"; // Import the Loading component
+import Error from "../error"; // Import the Error component
 
 function ShowDetails() {
-  const { id } = useParams(); // ✅ Replaces useRouter()
+  const { id } = useParams();
   const [show, setShow] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,8 +32,8 @@ function ShowDetails() {
     fetchShowDetails();
   }, [id]);
 
-  if (loading) return <p className="text-center text-lg">Loading...</p>;
-  if (error) return <p className="text-center text-red-500">{error}</p>;
+  if (loading) return <Loading />; // Use Loading component
+  if (error) return <Error message={error} />; // Use Error component
   if (!show) return null;
 
   return (
@@ -48,14 +50,12 @@ function ShowDetails() {
             />
           </div>
         )}
-
         <div className="w-full md:w-2/3">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">{show.name}</h1>
           <p
             className="text-gray-600 text-lg"
             dangerouslySetInnerHTML={{ __html: show.summary }}
           ></p>
-
           <ul className="mt-4 text-gray-700">
             <li>
               <strong>Genres:</strong> {show.genres.join(", ")}
@@ -83,7 +83,6 @@ function ShowDetails() {
               </li>
             )}
           </ul>
-
           <Link href="/shows">
             <button className="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
               Back to Shows

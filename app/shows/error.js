@@ -7,7 +7,7 @@ export default function Error({ error, reset }) {
         <h1 className="text-2xl font-bold text-red-600 mb-2">
           An Error Occurred
         </h1>
-        <p className="text-red-500">
+        <p className="text-red-600">
           {error?.message || "Something went wrong. Please try again later."}
         </p>
         <button
